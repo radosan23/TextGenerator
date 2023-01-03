@@ -21,7 +21,12 @@ class TextGenerator:
         print('Unique tokens: ', len(set(self.tokens)), '\n')
 
     def get_token(self, index):
-        return self.tokens[index]
+        try:
+            return self.tokens[int(index)]
+        except ValueError:
+            return 'Value Error. Please input an integer.'
+        except IndexError:
+            return 'Index Error. Please input an integer that is in the range of the corpus.'
 
 
 def main():
@@ -31,7 +36,7 @@ def main():
     tg.print_stats()
     cmd = input()
     while cmd != 'exit':
-        print(tg.get_token(int(cmd)))
+        print(tg.get_token(cmd))
         cmd = input()
 
 
