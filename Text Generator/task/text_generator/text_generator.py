@@ -1,6 +1,7 @@
 from collections import Counter
 from nltk.tokenize import regexp_tokenize
 from random import choices
+from string import ascii_uppercase
 
 
 class TextGenerator:
@@ -31,9 +32,10 @@ class TextGenerator:
         return f'Head: {name}\n' + '\n'.join(tails)+'\n'
 
     def get_sentence(self):
-        word = choices(list(self.head_dict.keys()))[0]
+        word = choices([x for x in list(self.head_dict.keys()) if x.startswith(tuple(ascii_uppercase))
+                        and not x.endswith(('.', '!', '?'))])[0]
         sentence = [word, ]
-        for _ in range(9):
+        while len(sentence) < 5 or not word.endswith(('.', '!', '?')):
             word = choices(*zip(*self.head_dict[word].items()))[0]
             sentence.append(word)
         return ' '.join(sentence)
